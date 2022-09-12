@@ -3,10 +3,8 @@ package com.pokemon.tradecardgame.entities;
 import com.pokemon.tradecardgame.utils.Crypto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.*;
-import java.security.CryptoPrimitive;
 import java.util.UUID;
 
 @AllArgsConstructor

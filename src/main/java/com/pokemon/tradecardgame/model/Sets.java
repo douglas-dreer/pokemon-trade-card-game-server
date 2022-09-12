@@ -11,4 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Sets {
    private List<Set> data;
+   private int page;
+   private int pageSize;
+   private int count;
+   private int totalCount;
 }

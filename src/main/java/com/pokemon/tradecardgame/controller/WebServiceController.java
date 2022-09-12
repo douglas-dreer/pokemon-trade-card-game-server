@@ -88,8 +88,6 @@ public class WebServiceController {
             log.warn("Não foi encontrado nenhum registro com o id: {}", setId);
         }
         return responseEntity;
-
-
     }
 
     @GetMapping(value = "/set", params = "name", produces = MediaType.APPLICATION_JSON_VALUE)

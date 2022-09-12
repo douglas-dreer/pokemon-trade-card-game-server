@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: Tradução API
+    profiles:
+      active: main
+  jpa:
+    database: POSTGRESQL
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:mem:pokemong-tcg
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+server:
+  servlet:
+    context-path: /pokemon-tcg/v1
+  port: '8080'

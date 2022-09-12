@@ -3,8 +3,6 @@ package com.pokemon.tradecardgame.controller;
 import com.pokemon.tradecardgame.entities.UserEntity;
 import com.pokemon.tradecardgame.pojo.User;
 import com.pokemon.tradecardgame.service.UserService;
-import com.pokemon.tradecardgame.utils.Converter;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

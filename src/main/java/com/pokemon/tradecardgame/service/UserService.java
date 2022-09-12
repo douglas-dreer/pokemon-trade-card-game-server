@@ -3,7 +3,6 @@ package com.pokemon.tradecardgame.service;
 import com.pokemon.tradecardgame.entities.UserEntity;
 import com.pokemon.tradecardgame.pojo.User;
 import com.pokemon.tradecardgame.repositories.UserRepository;
-
 import com.pokemon.tradecardgame.utils.Crypto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

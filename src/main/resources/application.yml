@@ -1,8 +1,9 @@
 spring:
   application:
-    name: Tradução API
+    name: PokÃ©mon Trade Card Collection
     profiles:
       active: main
+
   jpa:
     database: POSTGRESQL
     show-sql: 'true'
@@ -19,3 +20,4 @@ server:
   servlet:
     context-path: /pokemon-tcg/v1
   port: '8080'
+

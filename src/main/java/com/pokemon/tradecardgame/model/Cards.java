@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Getter
 public class Cards {
-    private List<Data> data;
+    private List<Card> data;
     private int page;
     private int pageSize;
     private int count;

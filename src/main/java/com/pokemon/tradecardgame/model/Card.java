@@ -1,10 +1,12 @@
 package com.pokemon.tradecardgame.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.*;
 
 import java.util.ArrayList;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Getter
 @Setter
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName(value = "data")
-@JsonIgnoreProperties
+@JsonInclude(NON_NULL)
 public class Card {
     public String id;
     public String name;

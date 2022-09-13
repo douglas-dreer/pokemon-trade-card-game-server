@@ -22,7 +22,10 @@ public interface PokemonTCGClient {
     Cards findAllBySetIdWithPagination(@RequestParam("setId") String setId, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
 
     @RequestMapping(method = RequestMethod.GET, value = "/cards?q=name:{name}&page={page}&pageSize={pageSize}")
-    Cards findAllCardByNameWithPagination(@RequestParam("name") String setId, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+    Cards findAllCardByNameWithPagination(@RequestParam("name") String name, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/cards?q=set.series:{serieName}&page={page}&pageSize={pageSize}")
+    Cards findCardBySerieWithPagination(@RequestParam("serieName") String serieName, @RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize);
 
     @RequestMapping(method = RequestMethod.GET, value = "/cards/{cardId}")
     Data findCardById(@RequestParam String cardId);
@@ -32,14 +35,16 @@ public interface PokemonTCGClient {
 
     @Cacheable(value = "all-sets")
     @RequestMapping(method = RequestMethod.GET, value = "/sets?page={page}&pageSize={pageSize}")
-    Sets findAllSet(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+    Sets findAllSetWithPagination(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
 
     @RequestMapping(method = RequestMethod.GET, value = "/sets/{setId}")
     Data findSetById(@RequestParam("setId") String setId);
 
     @RequestMapping(method = RequestMethod.GET, value = "/sets?q=name:{setName}&page={page}&pageSize={pageSize}")
-    Sets findSetByName(@RequestParam("setName") String setName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+    Sets findSetByNameWithPagination(@RequestParam("setName") String setName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
 
     @RequestMapping(method = RequestMethod.GET, value = "/sets?q=series:{serieName}&page={page}&pageSize={pageSize}")
-    Sets findSetBySeries(@RequestParam("serieName") String serieName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+    Sets findSetBySeriesWithPagination(@RequestParam("serieName") String serieName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+
+
 }

@@ -8,6 +8,7 @@ import com.pokemon.tradecardgame.model.Data;
 import com.pokemon.tradecardgame.model.Sets;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +23,25 @@ public class WebServiceController {
 
     @GetMapping(value = "/cards", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Cards> listCards(@RequestParam(name = "page", defaultValue = "1") Integer page, @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize) {
-
         return ResponseEntity.ok(pokemonTCGClient.findAllWithPagination(page, pageSize));
-
     }
 
     @GetMapping(value = "/cards", params = "set", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Cards> listCardBySet(
             @RequestParam(name = "set") String setId,
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
     ) {
         return  ResponseEntity.ok(pokemonTCGClient.findAllBySetIdWithPagination(setId, page, pageSize));
+    }
+
+    @GetMapping(value = "/cards", params = "series", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Cards> listCardBySerie(
+            @RequestParam(name = "series") String series,
+            @RequestParam(name = "page", defaultValue = "1") Integer page,
+            @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
+    ) {
+        return ResponseEntity.ok(pokemonTCGClient.findCardBySerieWithPagination(series, page, pageSize));
     }
 
     @GetMapping(value = "/cards", params = "name", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +82,7 @@ public class WebServiceController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findAllSet(page, pageSize));
+        return ResponseEntity.ok(pokemonTCGClient.findAllSetWithPagination(page, pageSize));
     }
 
     @GetMapping(value="/set/{setId}")
@@ -97,7 +104,7 @@ public class WebServiceController {
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
 
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findSetByName(name, page, pageSize));
+        return ResponseEntity.ok(pokemonTCGClient.findSetByNameWithPagination(name, page, pageSize));
     }
 
     @GetMapping(value = "/set", params = "series", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -107,6 +114,6 @@ public class WebServiceController {
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
 
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findSetBySeries(name, page, pageSize));
+        return ResponseEntity.ok(pokemonTCGClient.findSetBySeriesWithPagination(name, page, pageSize));
     }
 }

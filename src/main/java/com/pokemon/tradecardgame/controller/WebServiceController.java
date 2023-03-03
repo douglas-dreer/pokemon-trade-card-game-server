@@ -1,8 +1,9 @@
 package com.pokemon.tradecardgame.controller;
 
 import com.pokemon.tradecardgame.client.PokemonTCGClient;
+import com.pokemon.tradecardgame.enums.MessageErrorEnum;
 import com.pokemon.tradecardgame.enums.RarityEnum;
-import com.pokemon.tradecardgame.exceptions.NotFoundException;
+import com.pokemon.tradecardgame.exceptions.PokemonTradeCardGameException;
 import com.pokemon.tradecardgame.model.Cards;
 import com.pokemon.tradecardgame.model.Data;
 import com.pokemon.tradecardgame.model.Sets;
@@ -60,7 +61,7 @@ public class WebServiceController {
         try {
             responseEntity = ResponseEntity.ok(pokemonTCGClient.findCardById(cardId));
         } catch (Exception e) {
-            new NotFoundException(e, cardId);
+            new PokemonTradeCardGameException(MessageErrorEnum.NOT_FOUND, cardId);
         }
 
         return responseEntity;

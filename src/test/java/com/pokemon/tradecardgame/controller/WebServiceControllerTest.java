@@ -1,7 +1,6 @@
 package com.pokemon.tradecardgame.controller;
 
 import com.pokemon.tradecardgame.client.PokemonTCGClient;
-import com.pokemon.tradecardgame.exceptions.NotFoundException;
 import feign.FeignException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class WebServiceControllerTest {
 
     @InjectMocks
@@ -31,7 +30,7 @@ public class WebServiceControllerTest {
     @Mock
     private PokemonTCGClient client;
 
-    @Autowired
+    @InjectMocks
     private MockMvc mockMvc;
 
     @BeforeEach

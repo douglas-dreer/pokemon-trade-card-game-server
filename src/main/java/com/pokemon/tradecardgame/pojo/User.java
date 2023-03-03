@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -17,5 +19,7 @@ public class User {
     private String login;
     private String password;
     private String email;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateModified;
     private Boolean status;
 }

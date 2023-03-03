@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import static com.pokemon.tradecardgame.utils.Converter.convertUserEntityToUser;
@@ -20,7 +21,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
+    @GetMapping()
+    @ResponseBody
+    public ResponseEntity<List<User>> list() {
+        List<User> userList = convertUserEntityToUser(userService.listUser());
+        return ResponseEntity.ok(userList);
+    }
 
     @PostMapping(produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -34,22 +40,38 @@ public class UserController {
                 ResponseEntity.internalServerError().body(null);
     }
 
-    @GetMapping(value = "/{uuid}", produces = {"application/json;charset=utf-8"})
+    @GetMapping(path = "/{id}", produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public ResponseEntity<User> findById(@PathVariable(name = "uuid") UUID uuid) {
-        UserEntity userEntity = userService.findById(uuid);
+    public ResponseEntity<User> findById(@PathVariable("id") UUID id) {
+        ResponseEntity responseEntity = null;
+        UserEntity userEntity = userService.findById(id);
         return ResponseEntity.ok(convertUserEntityToUser(userEntity));
     }
 
-//
-//    @GetMapping(path = "/{email}", produces = {"application/json;charset=utf-8"})
-//    @ResponseBody
-//    public ResponseEntity<User> findUserByEmail(@PathVariable(name = "email") String email) {
-//        UserEntity userEntity = userService.findByEmail(email);
-//        return ResponseEntity.ok(convertToDto(userEntity));
-//    }
+    @GetMapping(path = "/{email}/email", produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public ResponseEntity<User> findUserByEmail(@PathVariable("email") String email) {
+        UserEntity userEntity = userService.findByEmail(email);
+        return ResponseEntity.ok(convertUserEntityToUser(userEntity));
+    }
 
+    @GetMapping(path = "/{login}/login", produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public ResponseEntity<User> findByLogin(@PathVariable("login") String login) {
+        UserEntity userEntity = userService.findByLogin(login);
+        return ResponseEntity.ok(convertUserEntityToUser(userEntity));
+    }
 
+    @PutMapping(produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public ResponseEntity<User> edit(@RequestBody User user) {
+        User userEdited = convertUserEntityToUser(userService.edit(user));
+        return ResponseEntity.ok(userEdited);
+    }
 
-
+    @DeleteMapping(path = "/{id}", produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public void delete(@PathVariable("id") UUID id) {
+        userService.delete(id);
+    }
 }

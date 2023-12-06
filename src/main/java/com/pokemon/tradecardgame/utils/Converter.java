@@ -1,19 +1,24 @@
 package com.pokemon.tradecardgame.utils;
 
-import com.pokemon.tradecardgame.entities.UserEntity;
-import com.pokemon.tradecardgame.pojo.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+@Component
 public class Converter {
-    private static ModelMapper modelMapper = new ModelMapper();
+    private static final ModelMapper modelMapper = new ModelMapper();
 
-    public static User convertUserEntityToUser(UserEntity entity) {
-        return entity == null ? null : modelMapper.map(entity, User.class);
+    static public <D> D convertTo(Object bean, Class<D> dto) {
+        return modelMapper.map(bean, dto);
     }
 
-    public static UserEntity convertUserToUserEntity(User dto) {
-        return dto == null ? null : modelMapper.map(dto, UserEntity.class);
+    static public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+        return source
+                .stream()
+                .map(element -> modelMapper.map(element, targetClass))
+                .collect(Collectors.toList());
     }
-
-
 }

@@ -6,6 +6,7 @@ import com.pokemon.tradecardgame.exceptions.NotFoundException;
 import com.pokemon.tradecardgame.model.Cards;
 import com.pokemon.tradecardgame.model.Data;
 import com.pokemon.tradecardgame.model.Sets;
+import com.pokemon.tradecardgame.model.SubTypes;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -115,5 +116,25 @@ public class WebServiceController {
 
     ) {
         return ResponseEntity.ok(pokemonTCGClient.findSetBySeriesWithPagination(name, page, pageSize));
+    }
+
+    @GetMapping(value = "/subtypes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SubTypes> listSubtypes() {
+        return ResponseEntity.ok(pokemonTCGClient.findAllSubtypes());
+    }
+
+    @GetMapping(value = "/supertypes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SubTypes> listSupertypes() {
+        return ResponseEntity.ok(pokemonTCGClient.findAllSuperTypes());
+    }
+
+    @GetMapping(value = "/rarities", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SubTypes> listRatities() {
+        return ResponseEntity.ok(pokemonTCGClient.findAllRatities());
+    }
+
+    @GetMapping(value = "/types", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SubTypes> listTypes() {
+        return ResponseEntity.ok(pokemonTCGClient.findAllTypes());
     }
 }

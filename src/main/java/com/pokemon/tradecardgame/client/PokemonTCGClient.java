@@ -4,6 +4,7 @@ import com.pokemon.tradecardgame.enums.RarityEnum;
 import com.pokemon.tradecardgame.model.Cards;
 import com.pokemon.tradecardgame.model.Data;
 import com.pokemon.tradecardgame.model.Sets;
+import com.pokemon.tradecardgame.model.SubTypes;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,19 @@ public interface PokemonTCGClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/sets?q=series:{serieName}&page={page}&pageSize={pageSize}")
     Sets findSetBySeriesWithPagination(@RequestParam("serieName") String serieName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/subtypes")
+    SubTypes findAllSubtypes();
+
+    @RequestMapping(method = RequestMethod.GET, value = "/supertypes")
+    SubTypes findAllSuperTypes();
+
+    @RequestMapping(method = RequestMethod.GET, value = "/rarities")
+    SubTypes findAllRatities();
+
+    @RequestMapping(method = RequestMethod.GET, value = "/types")
+    SubTypes findAllTypes();
+
 
 
 }

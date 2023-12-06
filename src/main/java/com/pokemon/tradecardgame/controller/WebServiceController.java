@@ -1,15 +1,10 @@
 package com.pokemon.tradecardgame.controller;
 
-import com.pokemon.tradecardgame.client.PokemonTCGClient;
 import com.pokemon.tradecardgame.enums.RarityEnum;
-import com.pokemon.tradecardgame.exceptions.NotFoundException;
-import com.pokemon.tradecardgame.model.Cards;
-import com.pokemon.tradecardgame.model.Data;
-import com.pokemon.tradecardgame.model.Sets;
-import com.pokemon.tradecardgame.model.SubTypes;
+import com.pokemon.tradecardgame.model.*;
+import com.pokemon.tradecardgame.service.PokemonTCGServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 public class WebServiceController {
     @Autowired
-    public PokemonTCGClient pokemonTCGClient;
+    public PokemonTCGServiceImpl service;
 
     @GetMapping(value = "/cards", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Cards> listCards(@RequestParam(name = "page", defaultValue = "1") Integer page, @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize) {
-        return ResponseEntity.ok(pokemonTCGClient.findAllWithPagination(page, pageSize));
+        return ResponseEntity.ok(service.findAllWithPagination(page, pageSize));
     }
 
     @GetMapping(value = "/cards", params = "set", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,7 +28,7 @@ public class WebServiceController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
     ) {
-        return  ResponseEntity.ok(pokemonTCGClient.findAllBySetIdWithPagination(setId, page, pageSize));
+        return  ResponseEntity.ok(service.listCardBySet(setId, page, pageSize));
     }
 
     @GetMapping(value = "/cards", params = "series", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,7 +37,7 @@ public class WebServiceController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findCardBySerieWithPagination(series, page, pageSize));
+        return ResponseEntity.ok(service.listCardBySerie(series, page, pageSize));
     }
 
     @GetMapping(value = "/cards", params = "name", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,19 +47,12 @@ public class WebServiceController {
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
 
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findAllCardByNameWithPagination(name, page, pageSize));
+        return ResponseEntity.ok(service.listCardByName(name, page, pageSize));
     }
 
     @GetMapping(value = "/cards/{cardId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Data> findCardById(@PathVariable("cardId") String cardId) {
-        ResponseEntity responseEntity = null;
-        try {
-            responseEntity = ResponseEntity.ok(pokemonTCGClient.findCardById(cardId));
-        } catch (Exception e) {
-            new NotFoundException(e, cardId);
-        }
-
-        return responseEntity;
+        return ResponseEntity.ok(service.findCardById(cardId));
     }
 
     @GetMapping(value = "/cards", params = {"set", "rarity"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,7 +62,7 @@ public class WebServiceController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
     ){
-        return ResponseEntity.ok(pokemonTCGClient.findCardBySetAndRarityWithPagination(setId, rarity, page, pageSize));
+        return ResponseEntity.ok(service.listCardByRarity(setId, rarity, page, pageSize));
     }
 
     @GetMapping(value="/set")
@@ -83,19 +71,12 @@ public class WebServiceController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findAllSetWithPagination(page, pageSize));
+        return ResponseEntity.ok(service.listSets(page, pageSize));
     }
 
     @GetMapping(value="/set/{setId}")
     public ResponseEntity<Data> findSetById(@PathVariable String setId) {
-        ResponseEntity responseEntity;
-        try {
-            responseEntity = ResponseEntity.ok(pokemonTCGClient.findSetById(setId));
-        } catch ( Exception e) {
-            responseEntity = ResponseEntity.ok(null);
-            log.warn("Não foi encontrado nenhum registro com o id: {}", setId);
-        }
-        return responseEntity;
+        return ResponseEntity.ok(service.findSetById(setId));
     }
 
     @GetMapping(value = "/set", params = "name", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -105,7 +86,7 @@ public class WebServiceController {
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
 
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findSetByNameWithPagination(name, page, pageSize));
+        return ResponseEntity.ok(service.findSetByName(name, page, pageSize));
     }
 
     @GetMapping(value = "/set", params = "series", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -115,26 +96,26 @@ public class WebServiceController {
             @RequestParam(name = "pageSize", defaultValue = "250") Integer pageSize
 
     ) {
-        return ResponseEntity.ok(pokemonTCGClient.findSetBySeriesWithPagination(name, page, pageSize));
+        return ResponseEntity.ok(service.findSetBySerie(name, page, pageSize));
     }
 
     @GetMapping(value = "/subtypes", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SubTypes> listSubtypes() {
-        return ResponseEntity.ok(pokemonTCGClient.findAllSubtypes());
+        return ResponseEntity.ok(service.listSubtypes());
     }
 
     @GetMapping(value = "/supertypes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SubTypes> listSupertypes() {
-        return ResponseEntity.ok(pokemonTCGClient.findAllSuperTypes());
+    public ResponseEntity<SuperTypes> listSupertypes() {
+        return ResponseEntity.ok(service.listSuperTypes());
     }
 
     @GetMapping(value = "/rarities", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SubTypes> listRatities() {
-        return ResponseEntity.ok(pokemonTCGClient.findAllRatities());
+    public ResponseEntity<Rarities> listRatities() {
+        return ResponseEntity.ok(service.listRarities());
     }
 
     @GetMapping(value = "/types", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SubTypes> listTypes() {
-        return ResponseEntity.ok(pokemonTCGClient.findAllTypes());
+    public ResponseEntity<Types> listTypes() {
+        return ResponseEntity.ok(service.listTypes());
     }
 }

@@ -1,10 +1,7 @@
 package com.pokemon.tradecardgame.client;
 
 import com.pokemon.tradecardgame.enums.RarityEnum;
-import com.pokemon.tradecardgame.model.Cards;
-import com.pokemon.tradecardgame.model.Data;
-import com.pokemon.tradecardgame.model.Sets;
-import com.pokemon.tradecardgame.model.SubTypes;
+import com.pokemon.tradecardgame.model.*;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,13 +48,13 @@ public interface PokemonTCGClient {
     SubTypes findAllSubtypes();
 
     @RequestMapping(method = RequestMethod.GET, value = "/supertypes")
-    SubTypes findAllSuperTypes();
+    SuperTypes findAllSuperTypes();
 
     @RequestMapping(method = RequestMethod.GET, value = "/rarities")
-    SubTypes findAllRatities();
+    Rarities findAllRatities();
 
     @RequestMapping(method = RequestMethod.GET, value = "/types")
-    SubTypes findAllTypes();
+    Types findAllTypes();
 
 
 

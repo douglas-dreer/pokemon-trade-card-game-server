@@ -3,23 +3,17 @@ package com.pokemon.tradecardgame.controller;
 import com.pokemon.tradecardgame.client.PokemonTCGClient;
 import com.pokemon.tradecardgame.entities.LegalitiesEntity;
 import com.pokemon.tradecardgame.entities.SetsEntity;
-import com.pokemon.tradecardgame.entities.UnlimitedEntity;
 import com.pokemon.tradecardgame.enums.Unlimited;
-import com.pokemon.tradecardgame.model.Set;
 import com.pokemon.tradecardgame.model.Sets;
 import com.pokemon.tradecardgame.service.SetupServiceImpl;
 import com.pokemon.tradecardgame.utils.Converter;
 import lombok.extern.log4j.Log4j2;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
